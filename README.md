@@ -2,7 +2,7 @@
 
 Repository for notes and programming assignments of [coursera.org] "Data Science" specizliztion.
 
-##Courses:
+Courses:
   - [The Data Scientist's Toolbox]
   - [R Programming]
   - [Getting and Cleaning Data]
