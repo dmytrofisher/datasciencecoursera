@@ -213,7 +213,7 @@ x <- seq(1.7, 1.9, len = 100)
 y <- sapply(x, nLL)
 plot(x, exp(-(y - min(y))), type = "l")
 ```
-![plot 1](images/plt_w231.png) 
+![plot 1](images/plot_w231.png) 
 
 ```r
 nLL <- make.NegLogLik(normals, c(FALSE, 2))
@@ -221,7 +221,7 @@ x <- seq(0.5, 1.5, len = 100)
 y <- sapply(x, nLL)
 plot(x, exp(-(y - min(y))), type = "l")
 ```
-![plot 2](images/plt_w232.png) 
+![plot 2](images/plot_w232.png) 
 
 ### Lexical Scoping Summary
 * Objective functions can be “built” which contain all of the necessary data for evaluating the function
