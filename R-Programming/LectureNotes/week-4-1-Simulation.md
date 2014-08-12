@@ -94,7 +94,7 @@ summary(y)
 plot(x, y)
 ```
 
-## PLOT
+![plot 1](images/plt_w411.png) 
 
 What if x is binary?
 ```r
@@ -108,7 +108,7 @@ summary(y)
 plot(x, y)
 ```
 
-![plot 1](images/plt_w411.png) 
+![plot 2](images/plt_w412.png) 
 
 ### Generating Random Numbers From a Generalized Linear Model
 Suppose we want to simulate from a Poisson model where
@@ -128,7 +128,7 @@ summary(y)
 plot(x, y)
 ```
 
-![plot 2](images/plt_w412.png)
+![plot 3](images/plt_w413.png)
 
 ### Random Sampling
 The `sample` function draws randomly from a specified set of (scalar) objects allowing you to sample from arbitrary distributions.
