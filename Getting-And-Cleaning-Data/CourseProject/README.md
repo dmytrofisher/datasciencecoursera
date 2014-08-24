@@ -2,7 +2,7 @@ README
 
 Run ```loadData()``` function from "run_analysis.R" - function will load and extract data into "UCI HAR Dataset". Function ```loadData``` has 1 parameter: "then.run" if it is set to "TRUE" - than analysis will automatically start after loading & extracting the data, otherwise you have to call function ```runAnalysis()``` manually to run the analysis. 
 
-If you have olready gotten the data put the *"run_analysis.R"* in the same folder where "UCI HAR Dataset" folder is located.
+If you have already gotten the data put the *"run_analysis.R"* in the same folder where "UCI HAR Dataset" folder is located.
 
 Script will read the data from: 
 - *activity_labels.txt*
