@@ -153,21 +153,28 @@ Sings: 0118999881999119725...3 !
 ```
 ### More Metacharacters - `|`
 This does not mean “pipe” in the context of regular expressions; instead it translates to “or”; we can use it to combine two expressions, the subexpressions being called alternatives
+
 ```
 flood|fire
 ```
+
 will match the lines
+
 ```
 is firewire like usb on none macs?
 the global flood makes sense within the context of the bible
 yeah ive had the fire on tonight
-... and the floods, hurricanes, killer heatwaves, rednecks, gun nuts, etc￼```
+... and the floods, hurricanes, killer heatwaves, rednecks, gun nuts, etc
+```
 
 We can include any number of alternatives...
+
 ```
 flood|earthquake|hurricane|coldfire
 ```
+
 will match the lines
+
 ```
 Not a whole lot of hurricanes in the Arctic.
 We do have earthquakes nearly every day somewhere in our State
@@ -175,11 +182,15 @@ hurricanes swirl in the other direction
 coldfire is STRAIGHT!
 ’cause we keep getting earthquakes
 ```
+
 The alternatives can be real expressions and not just literals
+
 ```
 ^[Gg]ood|[Bb]ad
 ```
+
 will match the lines
+
 ```
 good to hear some good knews from someone here
 Good afternoon fellow american infidels!
@@ -187,12 +198,16 @@ good on you-what do you drive?
 Katie... guess they had bad experiences...
 my middle name is trouble, Miss Bad News
 ```
+
 ### More Metacharacters: `(` and `)`
 Subexpressions are often contained in parentheses to constrain the alternatives
+
 ```
 ^([Gg]ood|[Bb]ad)
 ```
+
 will match the lines
+
 ```
 bad habbit
 bad coordination today
@@ -201,12 +216,16 @@ Badcop, its because people want to use drugs
 Good Monday Holiday
 Good riddance to Limey
 ```
+
 ### More Metacharacters: `?`
 The question mark indicates that the indicated expression is optional
+
 ```
 [Gg]eorge( [Ww]\.)? [Bb]ush
 ```
+
 will match the lines
+
 ```
 i bet i can spell better than you and george bush combined
 BBC reported that President George W. Bush claimed God told him to invade I
@@ -215,17 +234,22 @@ a bird in the hand is worth two george bushes
 
 ### One thing to note...
 In the following
+
 ```
 [Gg]eorge( [Ww]\.)? [Bb]ush
 ```
+
 we wanted to match a “.” as a literal period; to do that, we had to “escape” the metacharacter, preceding it with a backslash In general, we have to do this for any metacharacter we want to include in our match
 
 ### More metacharacters: `*` and `+`
 The `*` and + signs are metacharacters used to indicate repetition; `*` means *“any number, including none, of the item”* and `+` means *“at least one of the item”*
+
 ```
 (.*)
 ```
+
 will match the lines
+
 ```
 anyone wanna chat? (24, m, germany)
 hello, 20.m here... ( east area + drives + webcam )
@@ -236,7 +260,9 @@ hello, 20.m here... ( east area + drives + webcam )
 ```
 [0-9]+ (.*)[0-9]+
 ```
+
 will match the lines
+
 ```
 working as MP here 720 MP battallion, 42nd birgade
 so say 2 or 3 years at colleage and 4 at uni makes us 23 when and if we fin
@@ -246,10 +272,13 @@ Mmmm its time 4 me 2 go 2 bed
 
 ### More metacharacters: `{` and `}`
 `{` and `}` are referred to as interval quantifiers; the let us specify the minimum and maximum number of matches of an expression
+
 ```
 [Bb]ush( +[^ ]+ +){1,5} debate
 ```
+
 will match the lines
+
 ```
 Bush has historically won all major debates he’s done.
 in my view, Bush doesn’t need these debates..
@@ -259,6 +288,7 @@ Felix, I don’t disagree that Bush was poorly prepared for the debate.
 indeed, but still, Bush should have taken the debate more seriously.
 Keep repeating that Bush smirked and scowled during the debate
 ```
+
 ### Summary
 - Regular expressions are used in many different languages; not unique to R.
 - Regular expressions are composed of literals and metacharacters that represent sets or classes of characters/words
