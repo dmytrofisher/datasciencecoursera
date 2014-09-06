@@ -71,14 +71,14 @@ boxplot(pollution$pm25, col = "blue")
 hist(pollution$pm25, col = "green")
 ```
 
-![Histogram 1](images/w12_hisogram1.png)
+![Histogram 1](images/w12_histogram1.png)
 
 ```r
 hist(pollution$pm25, col = "green")
 rug(pollution$pm25)
 ```
 
-![Histogram 2](images/w12_hisogram2.png)
+![Histogram 2](images/w12_histogram2.png)
 
 ```r
 hist(pollution$pm25, col = "green", breaks = 100)
@@ -129,7 +129,7 @@ Two dimensions
 boxplot(pm25 ~ region, data = pollution, col = "red")
 ```
 
-![Boxplots 3](images/boxplot3.png)
+![Boxplots 3](images/w12_boxplot3.png)
 
 ### Multiple Histograms
 ```r
