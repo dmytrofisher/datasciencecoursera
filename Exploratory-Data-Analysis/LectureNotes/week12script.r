@@ -76,7 +76,7 @@ abline(h = 12, lwd = 2, lty = 2)
 dev.off()
 
 ### Multiple Scatterplots
-png("images/w13_scatterplot3.png")
+png("images/w12_scatterplot3.png", width = 960)
 par(mfrow = c(1, 2), mar = c(5, 4, 2, 1))
 with(subset(pollution, region == "west"), plot(latitude, pm25, main = "West"))
 with(subset(pollution, region == "east"), plot(latitude, pm25, main = "East"))
