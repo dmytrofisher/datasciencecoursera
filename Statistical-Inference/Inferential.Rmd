@@ -1,0 +1,92 @@
+---
+title: "Inferential data analysis"
+output: pdf_document
+date: "Sunday, October 26, 2014"
+---
+
+### Task 
+Analyze the ToothGrowth data in the R datasets package. 
+
+1. Load the ToothGrowth data and perform some basic exploratory data analyses 
+2. Provide a basic summary of the data.
+3. Use confidence intervals and hypothesis tests to compare tooth growth by supp and dose. (Use the techniques from class even if there's other approaches worth considering)
+4. State your conclusions and the assumptions needed for your conclusions. 
+
+Lets try to answer the questions:
+
+1. Does vitamin C affects on tooth growth in guinea pigs?
+2. Does supplement type have affect on tooth growth in guinea pigs?
+
+### Loading and exploring the data
+
+```{r}
+library(datasets)
+library(ggplot2)
+tg <- ToothGrowth
+
+ggplot(data = ToothGrowth, aes(x = supp, y = len)) +
+        geom_boxplot(aes(fill = supp)) +
+        facet_wrap(~ dose) +
+        ggtitle("The Effect of Vitamin C on tooth grows in Guinea Pigs") +
+        ylab("Tooth length") +
+        xlab("Vitamin C dose") +
+        scale_fill_hue(name="Supplement type",
+                   breaks=c("OJ", "VC"),
+                   labels=c("Orange juice", "Ascorbic acid"))
+```
+
+### Basic summary of the data
+
+```{r}
+str(tg)
+summary(tg)
+```
+
+### Hypothesis testing
+
+#### Qestion 1
+
+At first, lets try to find out does supplement type affects on tooth growth in guinea pigs. Assume the null hypothesis $H_{0}: \mu_{OJ} = \mu_{VC}$ and alternative hypothesis $H_{a}: \mu_{OJ} \neq \mu_{VC}$.
+
+```{r}
+t.test(len ~ supp, paired = FALSE, var.equal = FALSE, data = tg)$conf
+```
+
+As we can see 95% confidence interval contains zero, so we cannot reject the null hypothesis. Lets compare supplement types for each dose amount.
+
+```{r}
+tg05 <- tg[tg$dose == 0.5,]
+tg10 <- tg[tg$dose == 1.0,]
+tg20 <- tg[tg$dose == 2.0,]
+rbind(t.test(len ~ supp, paired = FALSE, var.equal = FALSE, data = tg05)$conf
+     ,t.test(len ~ supp, paired = FALSE, var.equal = FALSE, data = tg10)$conf
+     ,t.test(len ~ supp, paired = FALSE, var.equal = FALSE, data = tg20)$conf)
+```
+
+We can reject the null hypothesis in case of small doses - 0.5, 1.0 mg.
+
+#### Question 2
+
+Try to answer does vitamin C influences on tooth growth. Assume the null hypothesis $H_{0}: \mu_{i} = \mu_{j}$, where $i,j \in\left \{ 0.5, 1.0, 2.0 \right \}$. And alternative hypothesis $H_{a}: \mu_{i} > \mu_{j}, i > j$ (larger dose - longer teeth).
+
+```{r}
+rbind(t.test(tg20$len - tg10$len, paired = FALSE, var.equal = FALSE)$conf
+     ,t.test(tg20$len - tg05$len, paired = FALSE, var.equal = FALSE)$conf
+     ,t.test(tg10$len - tg05$len, paired = FALSE, var.equal = FALSE)$conf)
+```
+
+Calculating the 95% confidence intervals for pairwise differences of dose amounts we can see, that  null hypothesis can be rejected for all cases.
+
+### Conclusions
+
+1. There is no significant difference in supplement type for large doses of vitamin C. Meanwhile, oranje juice has more effect on teeth length at low doses of vitamin C. In total, there is no significant difference.
+
+2. Vitamin C dose amount directly affects of teeth length. More vitamin C - the longer teeth.
+
+### Assumtions
+1. All guinea pigs are randomly selected.
+2. There are no other factors which can deal confounding effect.
+
+
+
+

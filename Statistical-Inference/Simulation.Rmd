@@ -1,0 +1,95 @@
+---
+title: "Simulating Exponential Distribution"
+output: pdf_document
+date: "Sunday, October 26, 2014"
+---
+
+### Task
+Illustrate via simulation and associated explanatory text the properties of the distribution of the mean of 40 exponential with rate parameter $\lambda = 0.2$.  You should:
+
+1. Show where the distribution is centered at and compare it to the theoretical center of the distribution.
+2. Show how variable it is and compare it to the theoretical variance of the distribution.
+3. Show that the distribution is approximately normal.
+4. Evaluate the coverage of the confidence interval for $1 / \lambda$:
+$\bar{X} \pm 1.96 \frac{S}{\sqrt{n}}$
+
+### Simulation
+
+```{r}
+nosim <- 1000
+n <- 40
+lambda <- 0.2
+set.seed(1234)
+sim <- matrix(rexp(nosim * n, rate = lambda), nosim)
+sim.means <- apply(sim, 1, mean)
+```
+
+### Theoretical mean of the distribution
+
+The theoretical center of the distributon: $E[X] = 1 / \lambda$
+
+```{r}
+1 / lambda
+```
+
+The real center of the distribution is:
+
+```{r}
+mean(sim.means)
+```
+
+### Theoretical variance of the distribution
+
+The theoretical variance of the distribution: $Var[X] = 1 / \lambda^{2} n$
+
+```{r}
+1 / (lambda ^ 2 * n)
+```
+
+The real variance of the distribution is:
+
+```{r}
+var(sim.means)
+```
+
+### Distribution
+
+Distributin of the samale means is approximately normal.
+
+```{r}
+library(ggplot2)
+df <- data.frame(no <- c(1:nosim), x = sim.means)
+g <- ggplot(df, aes(x = x))
+g <- g + geom_histogram(aes(y = ..density..)
+             , binwidth = .1
+             , color = "black", fill = "white")
+g <- g + geom_density()
+g <- g + xlab("sample mean")
+g <- g + geom_vline(aes(xintercept = mean(x)), color = "red", size = .5)
+g
+```
+
+### Confidence interval
+
+Evaluating the coverage of the confidence interval for $1 / \lambda$:
+$\bar{X} \pm 1.96 \frac{S}{\sqrt{n}}, S = 1 / \lambda \sqrt{n}$ 
+
+Theoretical confidence interval:
+
+$$\frac{1}{\lambda}(1\pm\frac{1.96}{n})$$
+
+```{r}
+(1 / lambda) * (1 + c(-1, 1) * 1.96 / n)
+```
+
+Real confidence interval:
+
+```{r}
+mean(sim.means) + c(-1,1) * 1.96 * sd(sim.means) / sqrt(n)
+```
+
+
+
+
+
+
