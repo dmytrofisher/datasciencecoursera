@@ -1,0 +1,114 @@
+---
+title: "Automatic transmission increases fuel consuption!"
+output:
+  pdf_document: default
+  html_document: default
+date: "Sunday, November 23, 2014"
+---
+
+Such result was obtained while answering these questions:
+
+  1. Is an automatic or manual transmission better for miles per gallon?
+  2. How much is quantitative difference if any?
+
+### Synopsis
+
+The analysis is based on the `mtcars` data which was extracted from the 1974 *Motor Trend* US magazine. Data was "factorized" by numers of cylinders, automatic/manual transmission etc. Then was applied algorithm of finding the best model, based on Akaike information criterion. Then there were provided some test to verify that obtained model well to sample data. Was made a conclusion that automatic transmission increases fuel consumtion.
+
+### Exploratory analysis
+
+Exploring `mtcars` dataset we can notice, that some variables can be considered as factors. So, first of all, perform such kind of factorization:
+
+```{r}
+library(datasets)
+
+mtcars$cyl  <- factor(mtcars$cyl)
+mtcars$vs   <- factor(mtcars$vs)
+mtcars$am   <- factor(mtcars$am, labels = c("Automatic", "Manual"))
+mtcars$gear <- factor(mtcars$gear)
+mtcars$carb <- factor(mtcars$carb)
+```
+
+Now, let's find out how fuel consumption (further - mpg) differs for different types of transmission.
+
+```{r, echo = FALSE, fig.height= 3}
+par(mar = c(4,4,2,2))
+plot(mtcars$am, mtcars$mpg
+     , col = c("salmon", "lightblue")
+     , xlab = "Transmission type"
+     , ylab = "Miles per gallon"
+     , main = "Fuel consumption by transmission type")
+```
+
+The difference between mpg for automatic/manual transmission is noticalbe even with naked eye. While exploring pairwise `mtcars` plot we can also notice dependencies between mpg and other variables (plot in appendix). So, it's necessary to build a model. 
+
+### Building a model
+
+First of all, assume that our model is $$mpg = \beta_{0} + \beta_{1}cyl + \beta_{2}disp + \beta_{3}hp+ \beta_{4}drat + \beta_{5}wt + \beta_{6}qsec + \beta_{7}vs + \beta_{8}am + \beta_{9}gear + \beta_{10}carb + \epsilon$$
+Now we have to find out significant predictors i.e. throw away that $\beta_{i} \approx 0, i = \overline{1,n}$. For this we can apply model selection algorithm, which compares models generated from base and select the best by Akaike information criterion.
+
+```{r}
+fit <- lm(mpg ~ ., data = mtcars)
+fit <- step(fit, trace = FALSE) ## Applying algo
+fit
+```
+
+And appropriate plot
+
+```{r, echo = FALSE}
+par(mfrow = c(2,2))
+plot(fit, pch = 16, cex = .5, main = "Fuel consumption model")
+```
+
+
+Remarks:
+
+  1. Residuals vs. Fitted seems has random pattern.
+  2. Observations on Q-Q plot are close to line, so residuals are approximately normally distributed.
+  3. There are few outliers.
+
+### Statistical inference
+
+Assume following hypothesis $H_{0}: MPG_{Auto} = MPG_{Manual}$ and $H_{a}: MPG_{Auto} \neq MPG_{Manual}$. Let's provide test.
+
+```{r}
+t.test(mpg ~ am, data = mtcars)
+```
+
+Accepting alternative.
+
+### Conclusion
+
+Answers to the main questions are based on the best fit model :
+
+$$ mpg = 0 + 33.71cyl_{4} + 30.68cyl_{6} + 31.54cyl_{8} - 0.03hp - 2.5wt + 1.81am_{manual}$$
+
+  1. Cars with manual transmission has lower fuel consumption (higher mpg, adjusted by number of cylinders, weigth and horsepower).
+  2. Cars with manual transmission can drive 1.8 miles further than cars with automatic transmission per gallon of fuel.
+  
+Other conclusions:
+
+  3. Horspower has negligable impact on fuel consumption (mpg).
+  4. mpg will decrease by 2.5 for 1000lb increase in weight.
+
+### Appendix
+```{r, echo = FALSE}
+pairs(mtcars, lower.panel = panel.smooth, upper.panel = NULL
+      , pch = 16, cex = .5
+      , main = "Pairwise plot for \"mtcars\"")
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
